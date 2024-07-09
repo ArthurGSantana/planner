@@ -2,10 +2,9 @@ package com.arthur.planner.trip;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/trip")
@@ -16,10 +15,17 @@ public class TripController {
         this.tripService = tripService;
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Trip> getTrip(@PathVariable UUID id) {
+        var trip = tripService.getTrip(id);
+        return ResponseEntity.ok(trip);
+    }
+
     @PostMapping
-    public ResponseEntity<Trip> createTrip(@RequestBody TripRequestDto tripRequestDto) {
+    public ResponseEntity<TripCreateResponseDto> createTrip(@RequestBody TripRequestDto tripRequestDto) {
         var trip = tripService.createTrip(tripRequestDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(trip);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(new TripCreateResponseDto(trip.getId()));
     }
 
 }

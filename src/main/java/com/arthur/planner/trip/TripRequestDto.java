@@ -1,14 +1,18 @@
 package com.arthur.planner.trip;
 
+import com.arthur.planner.participant.ParticipantRequestDto;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public record TripRequestDto(
         String destination,
         LocalDateTime startsAt,
         LocalDateTime endsAt,
         String ownerName,
-        String ownerEmail
+        String ownerEmail,
+        List<ParticipantRequestDto> participants
 ) {
 
     public Trip toEntity() {
