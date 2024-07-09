@@ -28,4 +28,15 @@ public class TripController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new TripCreateResponseDto(trip.getId()));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Trip> updateTrip(@PathVariable UUID id, @RequestBody TripRequestDto tripRequestDto) {
+        var trip = tripService.updateTrip(id, tripRequestDto);
+        return ResponseEntity.ok(trip);
+    }
+
+    @PutMapping("/{id}/confirm")
+    public ResponseEntity<Void> confirmTrip(@PathVariable UUID id) {
+        tripService.confirmTrip(id);
+        return ResponseEntity.noContent().build();
+    }
 }
