@@ -1,8 +1,10 @@
 package com.arthur.planner.trip;
 
+import com.arthur.planner.participant.Participant;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -30,16 +32,28 @@ public class Trip {
     @Column(name = "owner_email", nullable = false)
     private String ownerEmail;
 
+    @OneToMany(mappedBy = "trip")
+    private List<Participant> participants;
+
     public Trip() {
     }
-
     public Trip(String destination, LocalDateTime startsAt, LocalDateTime endsAt, String ownerName, String ownerEmail) {
         this.destination = destination;
         this.startsAt = startsAt;
         this.endsAt = endsAt;
         this.ownerName = ownerName;
         this.ownerEmail = ownerEmail;
-        this.isConfirmed = false;
+    }
+
+    public Trip(UUID id, String destination, LocalDateTime startsAt, LocalDateTime endsAt, Boolean isConfirmed, String ownerName, String ownerEmail, List<Participant> participants) {
+        this.id = id;
+        this.destination = destination;
+        this.startsAt = startsAt;
+        this.endsAt = endsAt;
+        this.isConfirmed = isConfirmed;
+        this.ownerName = ownerName;
+        this.ownerEmail = ownerEmail;
+        this.participants = participants;
     }
 
     public UUID getId() {
@@ -96,5 +110,13 @@ public class Trip {
 
     public void setOwnerEmail(String ownerEmail) {
         this.ownerEmail = ownerEmail;
+    }
+
+    public List<Participant> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<Participant> participants) {
+        this.participants = participants;
     }
 }

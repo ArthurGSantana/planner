@@ -1,5 +1,6 @@
 package com.arthur.planner.participant;
 
+import com.arthur.planner.trip.Trip;
 import jakarta.persistence.*;
 
 import java.util.UUID;
@@ -22,17 +23,17 @@ public class Participant {
 
     @ManyToOne
     @JoinColumn(name = "trip_id", nullable = false)
-    private UUID tripId;
+    private Trip trip;
 
     public Participant() {
     }
 
-    public Participant(UUID id, String name, String email, Boolean isConfirmed, UUID tripId) {
+    public Participant(UUID id, String name, String email, Boolean isConfirmed, Trip trip) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.isConfirmed = isConfirmed;
-        this.tripId = tripId;
+        this.trip = trip;
     }
 
     public UUID getId() {
@@ -67,11 +68,11 @@ public class Participant {
         isConfirmed = confirmed;
     }
 
-    public UUID getTripId() {
-        return tripId;
+    public Trip getTrip() {
+        return trip;
     }
 
-    public void setTripId(UUID tripId) {
-        this.tripId = tripId;
+    public void setTrip(Trip trip) {
+        this.trip = trip;
     }
 }
